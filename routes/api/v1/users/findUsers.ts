@@ -1,7 +1,18 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
+import { Type } from "@sinclair/typebox"
+import { FastifyTypeBox } from "app"
+import { user } from "./common.schema"
 
-export default async function FindUsers(fastify: FastifyInstance) {
-  return async (req: FastifyRequest, res: FastifyReply) => {
-    res.send({ ok: true, users: [] })
-  } 
+const response = {
+  '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(user) })
+}
+
+const schema = {
+  response
+}
+
+export default async function FindUsers(fastify: FastifyTypeBox) {
+  fastify.get("", { schema }, async (req, res) => {
+    const users = [{ name: "foo", email: "bar" }]
+    res.send({ ok: true, users })
+  })
 }

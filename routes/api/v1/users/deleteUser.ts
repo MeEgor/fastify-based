@@ -1,7 +1,17 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
+import { FastifyTypeBox } from "app"
+import { crudSuccess, params } from "./common.schema"
 
-export default async function DeleteUser(fastify: FastifyInstance) {
-  return async (req: FastifyRequest, res: FastifyReply) => {
-    res.send({ ok: true, user: {}, message: "DeleteUser" })
-  } 
+const response = {
+  '200': crudSuccess
+}
+
+const schema = {
+  params, response
+}
+
+export default async function DeleteUser(fastify: FastifyTypeBox) {
+  fastify.delete('/:id', { schema }, async (req, res) => {
+    let user = { name: "default name", email: "default@foo.qwe" }
+    res.send({ ok: true, user })
+  })
 }
