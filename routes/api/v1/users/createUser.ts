@@ -1,7 +1,10 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
+import { FastifyTypeBox } from '../../../../app'
+import schema from './createUser.schema'
 
-export default async function CreateUser(fastify: FastifyInstance) {
-  return async (req: FastifyRequest, res: FastifyReply) => {
-    res.send({ ok: true, user: {}, message: "CreateUser" })
-  } 
+export default async function CreateUser(fastify: FastifyTypeBox) {
+  fastify.post('', { schema }, async (req, res) => {
+    const { name, email } = req.body
+
+    res.send({ ok: true, user: { name, email }, message: "CreateUser" })
+  })
 }
