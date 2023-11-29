@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox"
 import { FastifyTypeBox } from "app"
-import { user } from "./common.schema"
+import { user } from "./users.schema"
 
 const response = {
   '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(user) })

@@ -1,5 +1,5 @@
 import { FastifyTypeBox } from "app"
-import { crudSuccess, params } from "./common.schema"
+import { crudSuccess, params } from "./users.schema"
 
 const response = {
   '200': crudSuccess

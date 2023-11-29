@@ -1,5 +1,5 @@
 import { FastifyTypeBox } from "app"
-import { crudResponse, params } from "./common.schema"
+import { crudResponse, params } from "./users.schema"
 
 
 const response = crudResponse('200')

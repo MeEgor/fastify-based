@@ -1,6 +1,6 @@
-import { Type } from '@sinclair/typebox'
-import { FastifyTypeBox } from 'app'
-import { crudResponse, params } from './common.schema'
+import { Type } from "@sinclair/typebox"
+import { FastifyTypeBox } from "app"
+import { crudResponse, params } from "./users.schema"
 
 const body = Type.Object({
   name: Type.Optional(Type.String()),
