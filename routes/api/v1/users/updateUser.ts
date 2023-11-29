@@ -1,16 +1,10 @@
-import { Type } from "@sinclair/typebox"
 import { FastifyTypeBox } from "app"
-import { crudResponse, params } from "./users.schema"
-
-const body = Type.Object({
-  name: Type.Optional(Type.String()),
-  email: Type.Optional(Type.String()),
-  password: Type.Optional(Type.String())
-})
+import { crudResponse, params, updateBody as body } from "./users.schema"
 
 const response = crudResponse('200')
-
 const schema = {
+  description: 'Update user',
+  tags: ['Users'],
   params, body, response
 }
 

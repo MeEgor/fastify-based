@@ -1,16 +1,10 @@
-import { Type } from "@sinclair/typebox"
 import { FastifyTypeBox } from "app"
-import { crudResponse } from "./users.schema"
-
-const body = Type.Object({
-  name: Type.String(),
-  email: Type.String(),
-  password: Type.String()
-})
+import { crudResponse, createBody as body } from "./users.schema"
 
 const response = crudResponse('201')
-
 const schema = {
+  description: 'Create user',
+  tags: ['Users'],
   body, response
 }
 

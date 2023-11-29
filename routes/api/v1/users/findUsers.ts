@@ -1,12 +1,9 @@
-import { Type } from "@sinclair/typebox"
 import { FastifyTypeBox } from "app"
-import { user } from "./users.schema"
-
-const response = {
-  '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(user) })
-}
+import { findUsersResponse as response } from "./users.schema"
 
 const schema = {
+  description: 'Find users',
+  tags: ['Users'],
   response
 }
 

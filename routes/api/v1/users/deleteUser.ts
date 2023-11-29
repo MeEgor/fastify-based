@@ -1,11 +1,10 @@
 import { FastifyTypeBox } from "app"
-import { crudSuccess, params } from "./users.schema"
+import { crudResponse, params } from "./users.schema"
 
-const response = {
-  '200': crudSuccess
-}
-
+const response = crudResponse('200')
 const schema = {
+  description: 'Delete user',
+  tags: ['Users'],
   params, response
 }
 
