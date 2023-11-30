@@ -1,5 +1,6 @@
 import { FastifyTypeBox } from "app"
 import { crudResponse, createBody as body } from "./users.schema"
+import bcrypt from 'bcrypt'
 
 const response = crudResponse('201')
 const schema = {
@@ -9,9 +10,15 @@ const schema = {
 }
 
 export default async function CreateUser(fastify: FastifyTypeBox) {
-  fastify.post('', { schema }, async (req, res) => {
-    const { name, email } = req.body
+  const { db } = fastify
 
-    res.send({ ok: true, user: { name, email }})
+  fastify.post('', { schema }, async (req, res) => {
+    const { name, email, password } = req.body
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const user = db.users.create({ name, email, hashedPassword })
+
+    await db.users.save(user)
+
+    res.send({ ok: true, user })
   })
 }

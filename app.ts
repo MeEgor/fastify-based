@@ -1,17 +1,19 @@
-import 'json-schema-to-ts'
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
+import "reflect-metadata"
+import dotenv from "dotenv"
+dotenv.config()
+import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import fastify, { FastifyInstance, FastifyServerOptions } from "fastify"
 import {
   FastifyBaseLogger,
   RawReplyDefaultExpression,
   RawRequestDefaultExpression,
   RawServerDefault
-} from 'fastify'
-import { Type } from '@sinclair/typebox'
-import routes from '@fastify/routes'
+} from "fastify"
+import routes from "@fastify/routes"
 import Routes from "./routes/routes"
-import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
+import fastifySwagger from "@fastify/swagger"
+import fastifySwaggerUi from "@fastify/swagger-ui"
+import db from "./plugins/db"
 
 export type FastifyTypeBox = FastifyInstance<
   RawServerDefault,
@@ -23,6 +25,12 @@ export type FastifyTypeBox = FastifyInstance<
 
 export async function build(opts: FastifyServerOptions = {}) {
   const app = fastify(opts).withTypeProvider<TypeBoxTypeProvider>()
+
+  // connect to db
+  app.register(db)
+
+  // register routes
+  app.register(Routes)
   
   // register swagger
   app.register(fastifySwagger, {
@@ -56,9 +64,6 @@ export async function build(opts: FastifyServerOptions = {}) {
   
   // collects routes to display on start
   app.register(routes)
-
-  // register routes
-  app.register(Routes)
   
   return app
 }
