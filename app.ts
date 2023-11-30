@@ -10,9 +10,9 @@ import {
   RawServerDefault
 } from "fastify"
 import routes from "@fastify/routes"
-import Routes from "./routes/routes"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
+import Routes from "./routes/routes"
 import db from "./plugins/db"
 
 export type FastifyTypeBox = FastifyInstance<

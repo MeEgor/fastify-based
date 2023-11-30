@@ -1,6 +1,13 @@
 import fp from "fastify-plugin"
 import { DataSource, Repository } from "typeorm"
 import { User } from "../models"
+import { 
+  dbHost as host,
+  dbPort as port,
+  dbName as database,
+  dbUser as username,
+  dbPass as password
+} from "../config"
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -16,11 +23,11 @@ const entities = [
 
 const db = fp(async server => {
   const connectionConfig = {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT || "5432"),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
+    host,
+    port,
+    username,
+    password,
+    database
   }
   
   try {
