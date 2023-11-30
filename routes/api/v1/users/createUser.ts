@@ -19,6 +19,6 @@ export default async function CreateUser(fastify: FastifyTypeBox) {
 
     await db.users.save(user)
 
-    res.send({ ok: true, user })
+    res.status(201).send({ ok: true, user })
   })
 }

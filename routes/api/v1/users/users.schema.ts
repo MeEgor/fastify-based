@@ -5,6 +5,7 @@ export const params = Type.Object({
 })
 
 export const user = Type.Object({
+  id: Type.Optional(Type.String()),
   name: Type.String(),
   email: Type.String()
 })
@@ -26,8 +27,14 @@ export const crudSuccess = Type.Object({
   user
 })
 
+export const crudError = Type.Object({
+  ok: Type.Boolean(),
+  message: Type.String()
+})
+
 export const crudResponse = (successStatus: string) => ({
-  [successStatus]: crudSuccess
+  [successStatus]: crudSuccess,
+  '4xx': crudError
 })
 
 export const findUsersResponse = {

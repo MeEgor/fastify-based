@@ -8,8 +8,11 @@ const schema = {
 }
 
 export default async function FindUsers(fastify: FastifyTypeBox) {
+  const { db } = fastify
+
   fastify.get("", { schema }, async (req, res) => {
-    const users = [{ name: "foo", email: "bar" }]
+    const users = await db.users.find()
+
     res.send({ ok: true, users })
   })
 }

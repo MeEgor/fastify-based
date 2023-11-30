@@ -9,8 +9,23 @@ const schema = {
 }
 
 export default async function DeleteUser(fastify: FastifyTypeBox) {
+  const { db } = fastify
+
   fastify.delete('/:id', { schema }, async (req, res) => {
-    let user = { name: "default name", email: "default@foo.qwe" }
+    const { id } = req.params
+    let user = await db.users.findOne({
+      where: { id }
+    })
+
+    // 404
+    if (!user) {
+      res.status(404).send({ ok: false, message: "User not found" })
+      return
+    }
+
+    user = await db.users.remove(user)
+    db.users.merge(user, { id }) // because of Type ORM remove id from deletet entity
+
     res.send({ ok: true, user })
   })
 }

@@ -9,8 +9,21 @@ const schema = {
 }
 
 export default async function FindUser(fastify: FastifyTypeBox) {
+  const { db } = fastify
+
   fastify.get("/:id", { schema }, async (req, res) => {
-    const user = { email: "bar", name: "foo" }
+    const { id } = req.params
+    const user = await db.users.findOne({
+      where: { id }
+    })
+
+    // 404
+    if (!user) {
+      res.status(404).send({ ok: false, message: "User not found" })
+      return
+    }
+
+    // 200
     res.send({ ok: true, user })
   })
 }
