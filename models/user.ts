@@ -1,7 +1,8 @@
 import { v6 as uuidv6 } from "uuid-with-v6"
-import { Entity, Column, PrimaryColumn } from "typeorm"
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm"
+import { Post } from "./post"
 
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryColumn({ type: "uuid" })
   id: string = uuidv6()
@@ -14,4 +15,7 @@ export class User {
   
   @Column()
   hashedPassword!: string
+
+  @OneToMany(() => Post, post => post.author)
+  posts!: Post[]
 }

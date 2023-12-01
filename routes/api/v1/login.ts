@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken"
 import { FastifyTypeBox } from "app"
 import { jwtSecret } from "../../../config"
-import { user } from "./users/users.schema"
+import { userShortSchema } from "./users/users.schema"
 
 export default async function Login (fastify: FastifyTypeBox) {
   const { db } = fastify
@@ -16,7 +16,7 @@ export default async function Login (fastify: FastifyTypeBox) {
     response: {
       200: Type.Object({
         ok: Type.Boolean(),
-        user
+        user: userShortSchema
       }),
       401: Type.Object({
         ok: Type.Boolean(),
@@ -30,7 +30,10 @@ export default async function Login (fastify: FastifyTypeBox) {
     const user = await db.users.findOne({ where: { email } })
     if (!user)
       return res.status(401).send({ ok: false, message: 'Email or password incorrect' })
-
+  
+    /**
+     * TODO: move password stuff to util / service
+     */
     const isValidPassword = await bcrypt.compare(password, user.hashedPassword)
     if (!isValidPassword)
       return res.status(401).send({ ok: false, message: 'Email or password incorrect' })

@@ -14,7 +14,8 @@ export default async function FindUser(fastify: FastifyTypeBox) {
   fastify.get("/:id", { schema }, async (req, res) => {
     const { id } = req.params
     const user = await db.users.findOne({
-      where: { id }
+      where: { id },
+      relations: ['posts']
     })
 
     // 404

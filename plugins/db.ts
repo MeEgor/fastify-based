@@ -1,6 +1,6 @@
 import fp from "fastify-plugin"
 import { DataSource, Repository } from "typeorm"
-import { User } from "../models"
+import { User, Post } from "../models"
 import { 
   dbHost as host,
   dbPort as port,
@@ -12,13 +12,14 @@ import {
 declare module 'fastify' {
   interface FastifyInstance {
     db: {
-      users: Repository<User>
+      users: Repository<User>,
+      posts: Repository<Post>
     }
   }
 }
 
 const entities = [
-  User
+  User, Post
 ]
 
 const db = fp(async server => {
@@ -42,7 +43,8 @@ const db = fp(async server => {
     await appDataSource.initialize()
 
     server.decorate("db", {
-      users: appDataSource.getRepository(User)
+      users: appDataSource.getRepository(User),
+      posts: appDataSource.getRepository(Post)
     })
   } catch (error) {
     console.log(error)

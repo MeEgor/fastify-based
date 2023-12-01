@@ -1,14 +1,23 @@
 import { Type } from "@sinclair/typebox"
+import { postSchema } from "../posts/posts.schema"
 
 export const params = Type.Object({
   id: Type.String()
 })
 
-export const user = Type.Object({
-  id: Type.Optional(Type.String()),
+const userShort = {
+  id: Type.String(),
   name: Type.String(),
   email: Type.String()
-})
+}
+
+const userShow = {
+  ...userShort,
+  posts: Type.Array(postSchema)
+}
+
+export const userShortSchema = Type.Object(userShort)
+export const userShowSchema = Type.Object(userShow)
 
 export const createBody = Type.Object({
   name: Type.String(),
@@ -24,7 +33,7 @@ export const updateBody = Type.Object({
 
 export const crudSuccess = Type.Object({
   ok: Type.Boolean(),
-  user
+  user: userShortSchema
 })
 
 export const crudError = Type.Object({
@@ -37,6 +46,10 @@ export const crudResponse = (successStatus: string) => ({
   '4xx': crudError
 })
 
+export const findUserResponse = {
+  '200': Type.Object({ ok: Type.Boolean(), user: userShowSchema })
+}
+
 export const findUsersResponse = {
-  '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(user) })
+  '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(userShortSchema) })
 }
