@@ -12,10 +12,10 @@ export default async function CreatePost (fastify: FastifyTypeBox) {
 
   fastify.post('', { schema }, async (req, res) => {
     const { title, body } = req.body
-    const userId = req.userId
-    const author = db.users.create({ id: userId })
+    const authorId = req.userId
+    const author = await db.users.preload({ id: authorId })
     const post = db.posts.create({ title, body, author })
-    await db.posts.save(post, { reload: true })
+    await db.posts.save(post)
     
     res.status(201).send({ ok: true, post })
   })

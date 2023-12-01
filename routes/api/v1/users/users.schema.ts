@@ -1,23 +1,5 @@
 import { Type } from "@sinclair/typebox"
-import { postSchema } from "../posts/posts.schema"
-
-export const params = Type.Object({
-  id: Type.String()
-})
-
-const userShort = {
-  id: Type.String(),
-  name: Type.String(),
-  email: Type.String()
-}
-
-const userShow = {
-  ...userShort,
-  posts: Type.Array(postSchema)
-}
-
-export const userShortSchema = Type.Object(userShort)
-export const userShowSchema = Type.Object(userShow)
+import { userShortSchema, userShowSchema } from "../v1.schema"
 
 export const createBody = Type.Object({
   name: Type.String(),

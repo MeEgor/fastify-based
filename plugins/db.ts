@@ -13,7 +13,8 @@ declare module 'fastify' {
   interface FastifyInstance {
     db: {
       users: Repository<User>,
-      posts: Repository<Post>
+      posts: Repository<Post>,
+      dataSource: DataSource
     }
   }
 }
@@ -32,7 +33,7 @@ const db = fp(async server => {
   }
   
   try {
-    const appDataSource = new DataSource({
+    const dataSource = new DataSource({
       type: "postgres",
       ...connectionConfig,
       entities,
@@ -40,11 +41,12 @@ const db = fp(async server => {
       logging: true,
     })
 
-    await appDataSource.initialize()
+    await dataSource.initialize()
 
     server.decorate("db", {
-      users: appDataSource.getRepository(User),
-      posts: appDataSource.getRepository(Post)
+      dataSource,
+      users: dataSource.getRepository(User),
+      posts: dataSource.getRepository(Post)
     })
   } catch (error) {
     console.log(error)

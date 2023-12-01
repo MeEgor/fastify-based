@@ -1,5 +1,6 @@
 import { FastifyTypeBox } from "app"
-import { crudResponse, params, updateBody as body } from "./users.schema"
+import { crudResponse, updateBody as body } from "./users.schema"
+import { params } from "../v1.schema"
 import bcrypt from 'bcrypt'
 
 const response = crudResponse('200')
