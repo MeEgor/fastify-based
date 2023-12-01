@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox"
-import { userShortSchema, userShowSchema } from "../v1.schema"
+import { userShortSchema, userSchema } from "../v1.schema"
 
 export const createBody = Type.Object({
   name: Type.String(),
@@ -29,7 +29,7 @@ export const crudResponse = (successStatus: string) => ({
 })
 
 export const findUserResponse = {
-  '200': Type.Object({ ok: Type.Boolean(), user: userShowSchema })
+  '200': Type.Object({ ok: Type.Boolean(), user: userSchema })
 }
 
 export const findUsersResponse = {

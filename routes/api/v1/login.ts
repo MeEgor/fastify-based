@@ -3,12 +3,14 @@ import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken"
 import { FastifyTypeBox } from "app"
 import { jwtSecret } from "../../../config"
-import { userShortSchema } from "./users/users.schema"
+import { userShortSchema } from "./v1.schema"
 
 export default async function Login (fastify: FastifyTypeBox) {
   const { db } = fastify
 
   const schema = {
+    tags: ['Auth'],
+    description: 'Login',
     body: Type.Object({
       email: Type.String(),
       password: Type.String()

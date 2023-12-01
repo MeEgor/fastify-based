@@ -25,8 +25,8 @@ const post = {
 }
 export const postSchema = Type.Object(post)
 
-const userShow = {
+const user = {
   ...userShort,
   posts: Type.Array(postSchema)
 }
-export const userShowSchema = Type.Object(userShow)
+export const userSchema = Type.Object(user)

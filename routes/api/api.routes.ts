@@ -14,6 +14,7 @@ export default async function ApiRoutes(fastify: FastifyInstance) {
         version: '0.1.0'
       },
       tags: [
+        { name: 'Auth', description: 'Authentication end-points' },
         { name: 'Users', description: 'User related end-points' },
         { name: 'Posts', description: 'Post related end-points' }
       ],
