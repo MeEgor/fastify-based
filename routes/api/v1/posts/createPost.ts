@@ -1,5 +1,5 @@
 import { FastifyTypeBox } from "app"
-import { createBody as body, createResponse as response } from "./posts.schema"
+import { createBody as body, crudResponse as response } from "./posts.schema"
 
 const schema = {
   description: 'Create post',

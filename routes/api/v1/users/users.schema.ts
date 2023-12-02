@@ -13,25 +13,26 @@ export const updateBody = Type.Object({
   password: Type.Optional(Type.String())
 })
 
-export const crudSuccess = Type.Object({
+const crudSuccess = Type.Object({
   ok: Type.Boolean(),
   user: userShortSchema
 })
 
-export const crudError = Type.Object({
+const crudError = Type.Object({
   ok: Type.Boolean(),
   message: Type.String()
 })
 
-export const crudResponse = (successStatus: string) => ({
-  [successStatus]: crudSuccess,
+export const crudResponse = {
+  '2xx': crudSuccess,
   '4xx': crudError
-})
+}
 
 export const findUserResponse = {
-  '200': Type.Object({ ok: Type.Boolean(), user: userSchema })
+  200: Type.Object({ ok: Type.Boolean(), user: userSchema }),
+  404: crudError
 }
 
 export const findUsersResponse = {
-  '200': Type.Object({ ok: Type.Boolean(), users: Type.Array(userShortSchema) })
+  200: Type.Object({ ok: Type.Boolean(), users: Type.Array(userShortSchema) })
 }

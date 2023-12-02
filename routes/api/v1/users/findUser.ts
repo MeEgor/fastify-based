@@ -1,8 +1,7 @@
 import { FastifyTypeBox } from "app"
-import { crudResponse } from "./users.schema"
+import { crudResponse as response } from "./users.schema"
 import { params } from "../v1.schema"
 
-const response = crudResponse('200')
 const schema = {
   description: 'Find user by id',
   tags: ['Users'],

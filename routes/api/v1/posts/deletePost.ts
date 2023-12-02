@@ -1,6 +1,6 @@
 import { FastifyTypeBox } from "app"
 import { params } from "../v1.schema"
-import { deleteResponse as response } from "./posts.schema"
+import { crudResponse as response } from "./posts.schema"
 
 
 const schema = {

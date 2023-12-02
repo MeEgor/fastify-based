@@ -1,13 +1,5 @@
 import { Type } from "@sinclair/typebox"
-import { userShortSchema } from "../v1.schema"
-
-
-export const postSchema = Type.Object({
-  id: Type.String(),
-  title: Type.String(),
-  body: Type.String(),
-  author: userShortSchema
-})
+import { postSchema } from "../v1.schema"
 
 export const createBody = Type.Object({
   title: Type.String(),
@@ -19,45 +11,26 @@ export const updateBody = Type.Object({
   body: Type.Optional(Type.String())
 })
 
-const errorResponse = Type.Object({
+const crudSuccess = Type.Object({
+  ok: Type.Boolean(),
+  post: postSchema
+})
+
+const crudError = Type.Object({
   ok: Type.Boolean(),
   message: Type.String()
 })
 
-export const createResponse = {
-  201: Type.Object({
-    ok: Type.Boolean(),
-    post: postSchema
-  })
-}
-
-export const updateResponse = {
-  200: Type.Object({
-    ok: Type.Boolean(),
-    post: postSchema
-  }),
-  404: errorResponse
-}
-
-export const deleteResponse = {
-  200: Type.Object({
-    ok: Type.Boolean(),
-    post: postSchema
-  }),
-  404: errorResponse
+export const crudResponse = {
+  '2xx': crudSuccess,
+  '4xx': crudError
 }
 
 export const findPostResponse = {
-  200: Type.Object({
-    ok: Type.Boolean(),
-    post: postSchema
-  }),
-  404: errorResponse
+  200: Type.Object({ ok: Type.Boolean(), post: postSchema }),
+  404: crudError
 }
 
 export const findPostsResponse = {
-  200: Type.Object({
-    ok: Type.Boolean(),
-    posts: Type.Array(postSchema)
-  })
+  200: Type.Object({ ok: Type.Boolean(), posts: Type.Array(postSchema) })
 }

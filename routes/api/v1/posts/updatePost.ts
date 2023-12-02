@@ -1,5 +1,5 @@
 import { FastifyTypeBox } from "app"
-import { updateBody as body, updateResponse as response } from "./posts.schema"
+import { updateBody as body, crudResponse as response } from "./posts.schema"
 import { params } from "../v1.schema"
 
 const schema = {

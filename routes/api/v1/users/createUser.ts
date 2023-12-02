@@ -1,8 +1,7 @@
 import { FastifyTypeBox } from "app"
-import { crudResponse, createBody as body } from "./users.schema"
+import { crudResponse as response, createBody as body } from "./users.schema"
 import bcrypt from 'bcrypt'
 
-const response = crudResponse('201')
 const schema = {
   description: 'Create user',
   tags: ['Users'],
