@@ -34,5 +34,5 @@ export const findUserResponse = {
 }
 
 export const findUsersResponse = {
-  200: Type.Object({ ok: Type.Boolean(), users: Type.Array(userShortSchema) })
+  200: Type.Object({ ok: Type.Boolean(), users: Type.Array(userSchema) })
 }

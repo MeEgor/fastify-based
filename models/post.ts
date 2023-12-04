@@ -13,6 +13,9 @@ export class Post {
   @Column()
   body!: string
 
+  @Column({ type: "uuid" })
+  authorId!: string
+
   @ManyToOne(() => User, user => user.posts)
   author!: User
 }
