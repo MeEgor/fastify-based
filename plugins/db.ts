@@ -24,24 +24,24 @@ const entities = [
   User, Post, Comment
 ]
 
-const db = fp(async server => {
-  const connectionConfig = {
-    host,
-    port,
-    username,
-    password,
-    database
-  }
-  
-  try {
-    const dataSource = new DataSource({
-      type: "postgres",
-      ...connectionConfig,
-      entities,
-      synchronize: true,
-      logging: true,
-    })
+const connectionConfig = {
+  host,
+  port,
+  username,
+  password,
+  database
+}
 
+export const dataSource = new DataSource({
+  type: "postgres",
+  ...connectionConfig,
+  entities,
+  synchronize: true,
+  logging: true,
+})
+
+const db = fp(async server => {
+  try {
     await dataSource.initialize()
 
     server.decorate("db", {

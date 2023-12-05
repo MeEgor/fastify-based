@@ -1,6 +1,8 @@
 import { FastifyTypeBox } from "app"
 import { params } from "../v1.schema"
 import { findPostResponse as response } from "./posts.schema"
+import { dataSource } from "../../../../plugins/db"
+import { Comment, Post } from "../../../../models"
 
 const schema = {
   tags: ['Posts'],
@@ -8,19 +10,28 @@ const schema = {
   params, response
 }
 
+const posts = dataSource.getRepository(Post)
+const comments = dataSource.getRepository(Comment)
+
 export default async function FindPost (fastify: FastifyTypeBox) {
-  const { db } = fastify
-  
   fastify.get("/:id", { schema }, async (req, res) => {
     const { id } = req.params
-    const post = await db.posts.findOne({ 
-      where: { id },
-      relations: ["author"]
-    })
+    // TODO: move fetching / preloading to a service
+    const post = await posts.createQueryBuilder("posts")
+      .leftJoinAndSelect("posts.author", "author")
+      .where("posts.id = :id", { id })
+      .getOne()
+
     if (!post) {
       res.status(404).send({ ok: false, message: "Post not found" })
       return
     }
+    // Preload comments
+    post.comments = await comments.createQueryBuilder("comments")
+      .leftJoinAndSelect("comments.author", "author")
+      .where("comments.postId = :id", { id })
+      .limit(10)
+      .getMany()
 
     res.send({ ok: true, post })
   })
