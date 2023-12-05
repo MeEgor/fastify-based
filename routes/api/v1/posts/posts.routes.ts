@@ -5,6 +5,7 @@ import FindPost from "./findPost"
 import CreatePost from "./createPost"
 import UpdatePost from "./updatePost"
 import DeletePost from "./deletePost"
+import CreateComment from "./createComment"
 
 export default async function PostsRoutes (fastify: FastifyInstance) {
   fastify.register(FindPosts)
@@ -12,4 +13,5 @@ export default async function PostsRoutes (fastify: FastifyInstance) {
   fastify.register(CreatePost)
   fastify.register(UpdatePost)
   fastify.register(DeletePost)
+  fastify.register(CreateComment)
 }

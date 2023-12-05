@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox"
-import { postSchema } from "../v1.schema"
+import { postSchema, commentSchema } from "../v1.schema"
 
 export const createBody = Type.Object({
   title: Type.String(),
@@ -9,6 +9,10 @@ export const createBody = Type.Object({
 export const updateBody = Type.Object({
   title: Type.Optional(Type.String()),
   body: Type.Optional(Type.String())
+})
+
+export const createCommentBody = Type.Object({
+  body: Type.String()
 })
 
 const crudSuccess = Type.Object({
@@ -28,9 +32,15 @@ export const crudResponse = {
 
 export const findPostResponse = {
   200: Type.Object({ ok: Type.Boolean(), post: postSchema }),
-  404: crudError
+  '4xx': crudError
 }
 
 export const findPostsResponse = {
-  200: Type.Object({ ok: Type.Boolean(), posts: Type.Array(postSchema) })
+  200: Type.Object({ ok: Type.Boolean(), posts: Type.Array(postSchema) }),
+  '4xx': crudError
+}
+
+export const createCommentResponse = {
+  201: Type.Object({ ok: Type.Boolean(), comment: commentSchema }),
+  '4xx': crudError
 }

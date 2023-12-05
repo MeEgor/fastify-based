@@ -17,16 +17,25 @@ const userShort = {
 }
 export const userShortSchema = Type.Object(userShort)
 
+const comment = {
+  id: Type.String(),
+  body: Type.String(),
+  postId: Type.String(),
+  author: userShortSchema
+}
+export const commentSchema = Type.Object(comment)
+
 const post = {
   id: Type.String(),
   title: Type.String(),
   body: Type.String(),
-  author: userShortSchema
+  author: userShortSchema,
+  comments: Type.Optional(Type.Array(commentSchema))
 }
 export const postSchema = Type.Object(post)
 
 const user = {
   ...userShort,
-  posts: Type.Array(postSchema)
+  posts: Type.Optional(Type.Array(postSchema))
 }
 export const userSchema = Type.Object(user)
